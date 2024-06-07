@@ -12,7 +12,6 @@ fun main() {
     println(mutableVar) // output: 2
 
 
-
     // numeric data types: Byte, Short, Int, Long,
 
     // default type is Int (if it fits in 32-bit); else, will be inferred as Long
@@ -25,7 +24,6 @@ fun main() {
     // conversion of numeric data types
     println(doubleVal.toInt()) // output: 3
     println(mutableVar.toFloat()) // output: 2.0
-
 
 
     // char and strings
@@ -42,7 +40,7 @@ fun main() {
           poetry
     """
 
-    var variableRefer = "The first number with added 1 is ${mutableVar+1}"
+    var variableRefer = "The first number with added 1 is ${mutableVar + 1}"
     println(variableRefer) // output: The first number is 3
 
     // built-in
@@ -52,15 +50,12 @@ fun main() {
     stringVal.length
 
 
-
     // nullable types
     var stringNullable: String? = null
     // ? is used for null safe call
     println(stringNullable?.length) // output: null
     // ?: is the Elvis operator
     println(stringNullable?.length ?: "The value is null") // output: The value is null
-
-
 
 
     /******** Working with Functions ********/
@@ -96,15 +91,88 @@ fun main() {
     val higherOrderChallengeFancyFormatter: (String, String) -> String = { first, last ->
         "$last, $first"
     }
-    funcHigherOrderChallengePrintFormattedName("Harry", "Potter", higherOrderChallengeBasicFormatter) // output: Formatted name is Potter, Harry
-    funcHigherOrderChallengePrintFormattedName("Harry", "Potter", higherOrderChallengeFancyFormatter) // output: Formatted name is Harry Potter
-
-
+    funcHigherOrderChallengePrintFormattedName(
+        "Harry",
+        "Potter",
+        higherOrderChallengeBasicFormatter
+    ) // output: Formatted name is Potter, Harry
+    funcHigherOrderChallengePrintFormattedName(
+        "Harry",
+        "Potter",
+        higherOrderChallengeFancyFormatter
+    ) // output: Formatted name is Harry Potter
 
 
     /******** Control Flow Structures ********/
+    if (mutableVar > 3) println("$mutableVar is greater than 3")
+    else println("mutableVar $mutableVar is NOT greater than 3")
 
+    when {
+        mutableVar > 3 -> println("$mutableVar is greater than 3")
+        else -> println("mutableVar $mutableVar is NOT greater than 3")
+    } // same logic as the if/else above
+
+    mutableVar += 1
+    when (mutableVar) {
+        0, 1 -> println("The value of mutableVar is 0 or 1")
+        2 -> println("The value of mutableVar is 2")
+        in 3..Int.MAX_VALUE -> println("mutableVar $mutableVar is between 3 and Int.MAX_VALUE")
+    }
+
+    println(funcIfSingleExpression(mutableVar))
+    println(funcWhenSingleExpression(mutableVar))
+
+
+    val messageWithError = try {
+        "The value is ${10 / 0}"
+    } catch (error: IllegalStateException) {
+        "Error was IllegalState"
+    } catch (error: ArithmeticException) {
+        "Error was ArithmeticException" // output is this
+    }
+    println(messageWithError)
+
+
+    val genericVal: Any = 5
+    funcSmartCastingCheckType(genericVal)
+    // example of casting
+    // val intVal: Int = genericVal as Int
+
+    var counterWhile = 0
+    while (counterWhile < 5) {
+        print("$counterWhile ")
+        counterWhile++
+        if (counterWhile == 3) break
+    } // output: 0 1 2
+    println()
+
+
+    var counterDoWhile = 0
+    do {
+        print("$counterDoWhile ")
+        counterDoWhile += 1
+    } while (counterDoWhile < 3)
+    // output: 0 1 2
+    // same logic as the while loop above
+
+    println()
+    for (counter in 0 until 5) {
+        print("$counter ")
+    } // output: 0 1 2 3 4
+    println()
+    for (counter in 10 downTo 0 step 2) {
+        print("$counter ")
+    } // output: 10 8 6 4 2 0
+
+    println()
+    // challenge: replace an if/else expression with a when expression
+    println(funcWhenExpressionChallenge(null))
+    println(funcWhenExpressionChallenge(4))
+    println(funcWhenExpressionChallenge(3.2))
+    println(funcWhenExpressionChallenge("Hello Kotlin"))
+    println(funcWhenExpressionChallenge('a'))
 }
+
 /******** end of main() ********/
 
 fun funcWithStringReturn(): String {
@@ -133,12 +201,53 @@ var funcFunctionalTypeWithExplicitNaming: (String) -> String = { explicitName ->
 
 // higher-order functions
 // take note of "fun"
-fun funcHigherOrder(value1: Int, value2: Int,
-                    funcCalculator: (Int, Int) -> Int) {
+fun funcHigherOrder(
+    value1: Int, value2: Int,
+    funcCalculator: (Int, Int) -> Int
+) {
     println("The calculated value is ${funcCalculator(value1, value2)}")
 }
 
-fun funcHigherOrderChallengePrintFormattedName(first: String, last: String,
-                                               funcFormatter: (String, String) -> String) {
+fun funcHigherOrderChallengePrintFormattedName(
+    first: String, last: String,
+    funcFormatter: (String, String) -> String
+) {
     println("Formatted name is ${funcFormatter(first, last)}")
+}
+
+
+fun funcIfSingleExpression(param: Int) =
+    if (param > 3) {
+        "Param is greater than 3"
+    } else {
+        "Param is NOT greater than 3" // output is this
+    }
+
+fun funcWhenSingleExpression(param: Int) = when (param) {
+    3 -> "Param is 3" // output is this
+    else -> "Param is NOT 3"
+}
+
+fun funcSmartCastingCheckType(input: Any?) { // added ? so null can be passed
+    when (input) {
+        null -> println("Input is null")
+        is String -> println("Input is String")
+        !is String -> println("Input is not String")
+    }
+    // same logic as above
+    /** if (input is String?) {
+    if (input == null) println("The input is null")
+    else println("The input is a string with the length of ${input.length}")
+    }
+    if (input !is String) println("The input is NOT a string")**/
+}
+
+fun funcWhenExpressionChallenge(input: Any?): String = when (input) {
+    is Number -> {
+        if (input !is Int) "Input is an int number"
+        else "Input is a non-int number"
+    }
+    is String -> "Input is String with length ${input.length}"
+    null -> "Input is null"
+    else -> "Input didn't match target inputs"
 }
