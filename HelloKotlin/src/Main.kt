@@ -171,8 +171,63 @@ fun main() {
     println(funcWhenExpressionChallenge(3.2))
     println(funcWhenExpressionChallenge("Hello Kotlin"))
     println(funcWhenExpressionChallenge('a'))
-}
 
+
+
+    /******** Working with Collections ********/
+    // arrays
+    val arrayInt = arrayOf(100, 200, 300, 400, null)
+    val arraySetSize = arrayOfNulls<Int>(5)
+    val arrayCustom = Array(5) {index -> index }
+
+    arrayInt.size // size of array
+    arrayInt.get(0) // get the value of the 1st element; same as arrayInt[0]
+    arrayInt.set(4, 500) // set the value of 5th element; same as arrayInt[4] = 500
+
+    val primitiveInt = intArrayOf(1, 2, 3, 4, 5)
+
+    funcArrayGreet("Hi", "Rick", "Morty", "Summer", "Beth")
+
+
+    // by default, list is immutable
+    val listString: List<String> = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+    val emptyList: List<String> = emptyList()
+
+    listString.size // size of list
+    listString.get(0) // get the value of the 1st element; same as listString[0]
+
+    // mutable list
+    val listMutable = mutableListOf("Kotlin", "Java")
+    listMutable.add(1, "C++") // add in specific spot
+    println(listMutable.size) // output: 3
+    listMutable.removeAt(0) // remove specific spot
+
+
+    // set does not allow duplicate elements
+    val setAnimals = setOf("dog", "cat")
+    setAnimals.size
+    println(setAnimals.contains("bird")) // output: false
+
+
+    // map
+    val mapTestScores = mutableMapOf(
+        Pair(100, "Pass"),
+        Pair(50, "Borderline"),
+        30 to "Fail"
+    )
+
+    println(mapTestScores[100]) // output: Pass
+
+    for (pair in mapTestScores) {
+        println("Score of ${pair.key} is ${pair.value}")
+    }
+    for ((score, remark) in mapTestScores) {
+        println("Score of $score is $remark")
+    } // same logic as the code above
+
+    // need to change to mutableMapOf before adding
+    mapTestScores[0] = "Retake the test"
+}
 /******** end of main() ********/
 
 fun funcWithStringReturn(): String {
@@ -250,4 +305,11 @@ fun funcWhenExpressionChallenge(input: Any?): String = when (input) {
     is String -> "Input is String with length ${input.length}"
     null -> "Input is null"
     else -> "Input didn't match target inputs"
+}
+
+
+fun funcArrayGreet(greeting: String, vararg names: Any) {
+    for (name in names) {
+        println("$greeting, $name!")
+    }
 }
