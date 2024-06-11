@@ -258,16 +258,16 @@ fun main() {
     // see other notes: NotesIOExternal.kt and NotesIOUser.kt
 
     // added a new file: scores.txt
-    val scoresFile = File("src/scores.txt")
+    val scoresFile = File("src/main/kotlin/scores.txt")
     scoresFile.forEachLine { line -> println(line) }
     val sortedLines = scoresFile.readLines().sorted()
-    val outputFile = File("src/sortedScores.txt").toPath()
+    val outputFile = File("src/main/kotlin/sortedScores.txt").toPath()
     outputFile.writeLines(sortedLines)
 
     // challenge: parsing a list of data from a file
     // find the highest test scores from a file, prompt the user to enter the input filename
     // sort the scores, locate the highest three, write in output file
-    print("Enter the filename for the challenge: ") // input should be src/scores.txt
+    print("Enter the filename for the challenge: ") // input should be src/main/kotlin/scores.txt
     val challengeInputFilename = readLine()
     if (challengeInputFilename.isNullOrEmpty()) {
         println("The challenge file was null!")
@@ -282,7 +282,7 @@ fun main() {
     }
     val challengeHighest = challengeParsedScores.sortedByDescending { it.second }
         .take(3)
-    val challengeOutputFile = File("src/challengeHighestScores.txt").toPath()
+    val challengeOutputFile = File("src/main/kotlin/challengeHighestScores.txt").toPath()
     val challengeOutputScores = challengeHighest.map {
         "${it.first}:${it.second}"
     }
