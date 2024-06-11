@@ -245,11 +245,10 @@ fun main() {
     )
 
     challengeTestScores.toList()
-        .sortedBy { pair ->  pair.second } // access the 'second' which is the value; sort by test score
+        .sortedBy { pair -> pair.second } // access the 'second' which is the value; sort by test score
         .map { pair -> pair.first } // map to 'first', which is the student id
         .take(3) // take the first 3
         .forEach { println(it) }
-
 
 
     /******** Working with Inputs and Outputs ********/
