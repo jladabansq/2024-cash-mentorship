@@ -173,12 +173,11 @@ fun main() {
     println(funcWhenExpressionChallenge('a'))
 
 
-
     /******** Working with Collections ********/
     // arrays
     val arrayInt = arrayOf(100, 200, 300, 400, null)
     val arraySetSize = arrayOfNulls<Int>(5)
-    val arrayCustom = Array(5) {index -> index }
+    val arrayCustom = Array(5) { index -> index }
 
     arrayInt.size // size of array
     arrayInt.get(0) // get the value of the 1st element; same as arrayInt[0]
@@ -227,7 +226,31 @@ fun main() {
 
     // need to change to mutableMapOf before adding
     mapTestScores[0] = "Retake the test"
+
+    // sequences do the minimal number of operations (compared to iterables)
+    val sequenceMonths = sequenceOf("January", "February", "March")
+
+    // challenge: filtering a list of data - print out the 3 student IDs with the lowest test scores
+    val challengeTestScores = mapOf(
+        "123abc" to 88.1,
+        "124xyz" to 88.9,
+        "345abc" to 82.1,
+        "345bbc" to 72.1,
+        "34efbc" to 66.1,
+        "345abc" to 89.1,
+        "385agc" to 62.1,
+        "837abc" to 85.7,
+        "9459bc" to 94.3,
+        "nd2192" to 83.8,
+    )
+
+    challengeTestScores.toList()
+        .sortedBy { pair ->  pair.second } // access the 'second' which is the value; sort by test score
+        .map { pair -> pair.first } // map to student id
+        .take(3) // take the first 3
+        .forEach { println(it) }
 }
+
 /******** end of main() ********/
 
 fun funcWithStringReturn(): String {
@@ -302,6 +325,7 @@ fun funcWhenExpressionChallenge(input: Any?): String = when (input) {
         if (input !is Int) "Input is an int number"
         else "Input is a non-int number"
     }
+
     is String -> "Input is String with length ${input.length}"
     null -> "Input is null"
     else -> "Input didn't match target inputs"
