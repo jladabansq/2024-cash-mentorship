@@ -291,7 +291,9 @@ fun main() {
 
 
     /******** Testing Kotlin Code ********/
+    // see RandomNumberGeneratorTest
 
+    // see AnalyticsClient ViewModel ViewModelTest
 }
 
 /******** end of main() ********/
