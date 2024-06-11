@@ -1,5 +1,6 @@
 import java.io.File
 import kotlin.io.path.writeLines
+import kotlin.random.Random
 
 fun main() {
     /******** Common Data Types ********/
@@ -287,6 +288,10 @@ fun main() {
         "${it.first}:${it.second}"
     }
     challengeOutputFile.writeLines(challengeOutputScores)
+
+
+    /******** Testing Kotlin Code ********/
+
 }
 
 /******** end of main() ********/
@@ -375,3 +380,6 @@ fun funcArrayGreet(greeting: String, vararg names: Any) {
         println("$greeting, $name!")
     }
 }
+
+
+fun funcTestGetRandom(max: Int) = Random.nextInt(max)
