@@ -1,3 +1,6 @@
+import java.io.File
+import kotlin.io.path.writeLines
+
 fun main() {
     /******** Common Data Types ********/
     // immutable - read-only/cannot be changed
@@ -252,7 +255,38 @@ fun main() {
 
 
     /******** Working with Inputs and Outputs ********/
+    // see other notes: NotesIOExternal.kt and NotesIOUser.kt
 
+    // added a new file: scores.txt
+    val scoresFile = File("src/scores.txt")
+    scoresFile.forEachLine { line -> println(line) }
+    val sortedLines = scoresFile.readLines().sorted()
+    val outputFile = File("src/sortedScores.txt").toPath()
+    outputFile.writeLines(sortedLines)
+
+    // challenge: parsing a list of data from a file
+    // find the highest test scores from a file, prompt the user to enter the input filename
+    // sort the scores, locate the highest three, write in output file
+    print("Enter the filename for the challenge: ") // input should be src/scores.txt
+    val challengeInputFilename = readLine()
+    if (challengeInputFilename.isNullOrEmpty()) {
+        println("The challenge file was null!")
+        return
+    }
+    val challengeInputFile = File(challengeInputFilename)
+    if (!challengeInputFile.isFile) return
+    val challengeRawScores = challengeInputFile.readLines()
+    val challengeParsedScores = challengeRawScores.map { line ->
+        val elements = line.split(":")
+        elements[0] to elements[1]
+    }
+    val challengeHighest = challengeParsedScores.sortedByDescending { it.second }
+        .take(3)
+    val challengeOutputFile = File("src/challengeHighestScores.txt").toPath()
+    val challengeOutputScores = challengeHighest.map {
+        "${it.first}:${it.second}"
+    }
+    challengeOutputFile.writeLines(challengeOutputScores)
 }
 
 /******** end of main() ********/
